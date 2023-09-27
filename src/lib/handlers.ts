@@ -6,6 +6,9 @@ import { Types } from 'mongoose';
 export interface ProductsResponse {
   products: Product[];
 }
+export interface UserResponse {
+  users: User[];
+}
 
 export async function getProducts(): Promise<ProductsResponse> {
   await connect();
@@ -14,6 +17,9 @@ export async function getProducts(): Promise<ProductsResponse> {
     name: true,
     price: true,
     img: true,
+    brand: true,
+    colour: true,
+    description: true,
   };
 
   const products = await Products.find({}, productProjection);
@@ -54,4 +60,23 @@ export interface CreateUserResponse {
     return {
       _id: newUser._id,
     };
+  }
+
+  export async function getUser(userId: string): Promise<UserResponse | null> {
+    await connect();
+  
+    const userProjection = {
+      email: true,
+      name: true,
+      surname: true,
+      address: true,
+      birthdate: true,
+    };
+    const user = await Users.findById(userId, userProjection);
+  
+    if (user === null) {
+      return null;
+    }
+  
+    return user;
   }
