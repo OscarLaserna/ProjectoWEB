@@ -11,7 +11,6 @@ export interface Order {
     qty: number;
     price: number;
   }[];
-  users: Types.ObjectId[];
 }
 
 const OrderSchema = new Schema({
@@ -50,12 +49,6 @@ const OrderSchema = new Schema({
         required: true,
         min: 0.01,
       },
-    },
-  ],
-  users: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
     },
   ],
 });
