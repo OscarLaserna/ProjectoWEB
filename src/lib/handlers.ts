@@ -3,6 +3,7 @@ import connect from '@/lib/mongoose';
 import Users, { User } from '@/models/User';
 import { Types } from 'mongoose';
 import { types } from 'util';
+import Orders, { Order } from '@/models/Order';
 
 export interface ProductsResponse {
   products: Product[];
@@ -19,6 +20,12 @@ export interface CartItemResponse {
 export interface UpdateCartItemResponse {
   cartItems: Types.ObjectId[],
   }
+ export interface CreateUserResponse {
+  _id: Types.ObjectId | string;
+}
+export interface CreateOrderResponse {
+  _id: Types.ObjectId | string;
+}
 
 
 export async function getProducts(): Promise<ProductsResponse> {
@@ -58,39 +65,41 @@ export async function getProductsid(productId: string): Promise<ProductsidRespon
 
   return product;
 }
+
+  
 export interface CreateUserResponse {
-    _id: Types.ObjectId | string;
+  _id: Types.ObjectId | string;
+}
+
+export async function createUser(user: {
+  email: string;
+  password: string;
+  name: string;
+  surname: string;
+  address: string;
+  birthdate: Date;
+}): Promise<CreateUserResponse | null> {
+  await connect();
+
+  const prevUser = await Users.find({ email: user.email });
+
+  if (prevUser.length !== 0) {
+    return null;
   }
-  
-  export async function createUser(user: {
-    email: string;
-    password: string;
-    name: string;
-    surname: string;
-    address: string;
-    birthdate: Date;
-  }): Promise<CreateUserResponse | null> {
-    await connect();
-  
-    const prevUser = await Users.find({ email: user.email });
-  
-    if (prevUser.length !== 0) {
-      return null;
-    }
-  
-    const doc: User = {
-      ...user,
-      birthdate: new Date(user.birthdate),
-      cartItems: [],
-      orders: [],
-    };
-  
-    const newUser = await Users.create(doc);
-  
-    return {
-      _id: newUser._id,
-    };
-  }
+
+  const doc: User = {
+    ...user,
+    birthdate: new Date(user.birthdate),
+    cartItems: [],
+    orders: [],
+  };
+
+  const newUser = await Users.create(doc);
+
+  return {
+    _id: newUser._id,
+  };
+}
 
   export async function getUser(userId: string): Promise<UserResponse | null> {
     await connect();
@@ -131,6 +140,33 @@ export interface CreateUserResponse {
       return null
     }
     return user
+  }
+
+  export async function createOrder(userId: string, order: {
+    address: string;
+    cardHolder: string;
+    cardNumber: string;
+  }): Promise<CreateOrderResponse | null> {
+    await connect();
+  
+    const user = await Users.findById(userId);
+    
+    if (user === null){
+      return null
+    }
+
+  
+    const doc: Order = {
+      ...order,
+      date: new Date,
+      OrderItems: [],
+    };
+  
+    const newOrder = await Orders.create(doc);
+  
+    return {
+      _id: newOrder._id,
+    };
   }
 
 
