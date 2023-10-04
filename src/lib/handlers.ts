@@ -17,6 +17,9 @@ export interface UserResponse {
 export interface CartItemResponse {
   cartItems: User[],
   }
+export interface OrderResponse {
+  Order: User[],
+}
 export interface UpdateCartItemResponse {
   cartItems: Types.ObjectId[],
   }
@@ -142,6 +145,27 @@ export async function createUser(user: {
     return user
   }
 
+  export async function getOrder(userId: string
+    ): Promise<OrderResponse | null> {
+        await connect();
+        const userProjection = {
+          _id:false,
+          orders:true,
+        }
+        const orderProjection = {
+          date: true,
+          address: true,
+          cardHolder: true,
+          cardNumber: true,
+        }
+        const user = await Users.findById(userId,userProjection).populate('orders',orderProjection);
+        
+        if (user === null){
+          return null
+        }
+        return user
+      }
+
   export async function createOrder(userId: string, order: {
     address: string;
     cardHolder: string;
@@ -163,7 +187,10 @@ export async function createUser(user: {
     };
   
     const newOrder = await Orders.create(doc);
-  
+
+    if (newOrder){
+      user.order= newOrder._id
+    }
     return {
       _id: newOrder._id,
     };
