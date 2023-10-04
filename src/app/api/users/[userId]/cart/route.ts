@@ -1,24 +1,24 @@
 import { Types } from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
-import { getCart, UserResponse } from '@/lib/handlers';
+import { getCart, UpdateCartItemResponse } from '@/lib/handlers';
 
 export async function GET(
   request: NextRequest,
   {
     params,
-  }: {
-    params: { cartItem: string };
+  }:{
+    params: { userId: string};
   }
-): Promise <NextResponse<UserResponse> | {}> {
-  if (!Types.ObjectId.isValid(params.cartItem)) {
+): Promise <NextResponse<UpdateCartItemResponse> | {}> {
+  if (!Types.ObjectId.isValid(params.userId)) {
     return NextResponse.json({}, { status: 400 });
   }
 
-  const user = await getCart(params.cartItem);
+  const cart = await getCart(params.userId);
 
-  if (user === null) {
+  if (cart === null) {
     return NextResponse.json({}, { status: 404 });
   }
 
-  return NextResponse.json(user);
+  return NextResponse.json(cart);
 }

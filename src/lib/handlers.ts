@@ -13,6 +13,13 @@ export interface ProductsidResponse {
 export interface UserResponse {
   users: User[];
 }
+export interface CartItemResponse {
+  cartItems: User[],
+  }
+export interface UpdateCartItemResponse {
+  cartItems: Types.ObjectId[],
+  }
+
 
 export async function getProducts(): Promise<ProductsResponse> {
   await connect();
@@ -104,25 +111,29 @@ export interface CreateUserResponse {
     return user;
   }
 
-  export async function getCart(userId: string): Promise<UserResponse | null> {
+  export async function getCart(userId: string
+): Promise<CartItemResponse | null> {
     await connect();
-  
     const userProjection = {
-      cartItem: true,
-    };
-    const user = await Users.findById(userId, userProjection);
-  
-    if (user === null) {
-      return null;
+      _id:false,
+      cartItems:{
+        product:true,
+        qty:true,
+      }
     }
-  
-    return user;
+    const productProjection = {
+      name:true,
+      price:true
+    }
+    const user = await Users.findById(userId,userProjection).populate('cartItems.product',productProjection);
+    
+    if (user === null){
+      return null
+    }
+    return user
   }
 
-  export interface UpdateCartItemResponse {
-    cartItems: Types.ObjectId[],
-    }
-  
+
   export async function updateCartItem(
     userId: string,
     productId: string,
