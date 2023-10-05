@@ -188,9 +188,8 @@ export async function createUser(user: {
   
     const newOrder = await Orders.create(doc);
 
-    if (newOrder){
-      user.order= newOrder._id
-    }
+     user.orders.push(newOrder._id)
+     await user.save()
     return {
       _id: newOrder._id,
     };
