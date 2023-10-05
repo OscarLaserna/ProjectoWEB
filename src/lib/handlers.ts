@@ -27,7 +27,7 @@ export interface UpdateCartItemResponse {
   _id: Types.ObjectId | string;
 }
 export interface CreateOrderResponse {
-  _id: Types.ObjectId | string;
+  _id: Types.ObjectId[];
 }
 
 
@@ -158,7 +158,7 @@ export async function createUser(user: {
           cardHolder: true,
           cardNumber: true,
         }
-        const user = await Users.findById(userId,userProjection).populate('orders',orderProjection);
+        const user = await Users.findOne({_id:userId},userProjection).populate('orders',orderProjection);
         
         if (user === null){
           return null
@@ -172,9 +172,14 @@ export async function createUser(user: {
     cardNumber: string;
   }): Promise<CreateOrderResponse | null> {
     await connect();
+
+    const productProjection = {
+      price:true
+    }
   
-    const user = await Users.findById(userId);
-    
+    const user = await Users.findById(userId).populate('cartItems.product',productProjection);
+    //const product.idd = user.
+    //const product = await Products.findById(userId);
     if (user === null){
       return null
     }
@@ -183,12 +188,18 @@ export async function createUser(user: {
     const doc: Order = {
       ...order,
       date: new Date,
-      OrderItems: [],
+      //OrderItems: [],
+      OrderItems: user.cartItems.map((cartItem: any)=>({
+        ...cartItem,
+        price: cartItem.product.price,
+      })),
     };
   
     const newOrder = await Orders.create(doc);
 
      user.orders.push(newOrder._id)
+     //newOrder.OrderItems.push(user.cartItem)
+     //newOrder.OrderItems.price.push(user.cartItem)
      await user.save()
     return {
       _id: newOrder._id,
