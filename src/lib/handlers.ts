@@ -40,7 +40,6 @@ export async function getProducts(): Promise<ProductsResponse> {
     img: true,
     brand: true,
     colour: true,
-    description: true,
   };
 
   const products = await Products.find({}, productProjection);
