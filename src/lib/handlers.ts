@@ -214,14 +214,15 @@ export async function createUser(user: {
     await connect()
     const product = await Products.findById(productId)
     //const productCount = await Products.countDocuments({_id : productId})
-   // if (productCount === 0){
-    //  return null
+    //if (productCount === 0){
+     // return null
     //}
     if (product === null){
       return null
     }
-
+    
     const user = await Users.findById(userId)
+    //const user = await Users.findById(userId).populate('cartItems.product');
 
     if (user === null){
       return null
@@ -234,9 +235,10 @@ export async function createUser(user: {
     } else {
       const newCartItem = {
         product: new Types.ObjectId(productId),
-        qty: Number,
+        qty:qty,
       }
       user.cartItems.push(newCartItem)
+      await user.save()
     }
 
     await user.save()
@@ -248,8 +250,13 @@ export async function createUser(user: {
         qty:true,
       }
     }
+    const productProjection = {
+      _id:true,
+      name:true,
+      price:true,
+    }
     const updateUser = Users
-      .findById(userId)
-
-    return updateUser
+      .findById(userId,userProjection).populate('cartItems.product',productProjection);
+      //.findOne({_id:userId},userProjection).populate('cartItems.product',productProjection);
+    return updateUser;
   }

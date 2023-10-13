@@ -69,7 +69,7 @@ async function seed() {
   };
   const conn = await mongoose.connect(MONGODB_URI, opts);
 
-  //await conn.connection.db.dropDatabase();
+  await conn.connection.db.dropDatabase();
 
   const insertedProducts = await Products.insertMany(products);
   const user: User = {
@@ -96,18 +96,10 @@ async function seed() {
         product: insertedProducts[3]._id,
         qty: 6,
       },
-      {
-        product: insertedProducts[4]._id,
-        qty: 3,
-      },
-      {
-        product: insertedProducts[5]._id,
-        qty: 10,
-      },
     ],
     orders: [],
   };
-  //const res = await Users.create(user);
+  const res = await Users.create(user);
   const retrievedUser = await Users
   .findOne({ email: 'johndoe@example.com' })
   .populate('cartItems.product');
