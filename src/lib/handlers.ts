@@ -195,6 +195,7 @@ export async function createUser(user: {
     };
   
     const newOrder = await Orders.create(doc);
+    user.cartItems = [];
 
      user.orders.push(newOrder._id)
      //newOrder.OrderItems.push(user.cartItem)
