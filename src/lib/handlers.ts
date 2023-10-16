@@ -261,3 +261,41 @@ export async function createUser(user: {
       //.findOne({_id:userId},userProjection).populate('cartItems.product',productProjection);
     return updateUser;
   }
+
+  export async function getOrderById(userId:string, orderId:string):Promise<OrderResponse | null>{
+    await connect();
+    const orderProjection = {
+      _id: true,
+      date: true,
+      address: true,
+      cardHolder: true,
+      cardNumber: true,
+      OrderItems:{
+        product: true,
+        qty: true,
+        price:true,
+      }
+    }
+    const productProjection = {
+      name:true,
+    }
+    const userProjection = {
+      _id: false,
+      orders:true,
+    }
+  
+    const user = await Users.findById(userId,userProjection).populate('orders',orderProjection);
+  
+    if(!user){
+      return null;
+    }
+  
+    const order = user.orders.find(
+      (orderItem:any) => orderItem._id.equals(orderId)
+    ).populate('OrderItems.product',productProjection);
+  
+    if(order){
+      return order;
+    }
+    return null;
+  }
