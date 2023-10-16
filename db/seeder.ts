@@ -3,6 +3,7 @@ import Users, { User } from '@/models/User';
 import Orders, { Order } from '@/models/Order';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+//import Order  from '@/models/Order';
 
 dotenv.config({ path: `.env.local`, override: true });
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -57,6 +58,8 @@ const products: Product[] = [
   },
 ];
 
+  
+
 async function seed() {
   if (!MONGODB_URI) {
     throw new Error(
@@ -72,6 +75,46 @@ async function seed() {
   await conn.connection.db.dropDatabase();
 
   const insertedProducts = await Products.insertMany(products);
+  const orders: Order[] = [
+    {
+      date: new Date('1990-01-01'),
+      address: 'Unnamed Street 4563 , 24352345 London , UK',
+      cardHolder: 'Foo Bar 352345',
+      cardNumber: '123456789',
+      OrderItems: [
+        {
+        product: insertedProducts[0]._id,
+        qty: 2,
+        price: insertedProducts[0].price,
+        },
+        {
+          product: insertedProducts[1]._id,
+          qty: 5,
+          price:insertedProducts[1].price,
+        },
+      ],
+    },
+    {
+      date: new Date('1995-01-01'),
+      address: 'Unnamed Street 7843832 , 9843298432 London , UK',
+      cardHolder: 'Foo Bar 43904309342',
+      cardNumber: '843323',
+      OrderItems: [
+        {
+        product: insertedProducts[2]._id,
+        qty: 1,
+        price: insertedProducts[2].price,
+        },
+        {
+          product: insertedProducts[3]._id,
+          qty: 6,
+          price:insertedProducts[3].price,
+        },
+      ],
+    },
+  ];
+  const insertedOrders = await Orders.insertMany(orders);
+ 
   const user: User = {
     email: 'johndoe@example.com',
     password: '1234',
@@ -97,7 +140,7 @@ async function seed() {
         qty: 6,
       },
     ],
-    orders: [],
+    orders: insertedOrders.map(orders => orders._id),
   };
   const res = await Users.create(user);
   const retrievedUser = await Users
