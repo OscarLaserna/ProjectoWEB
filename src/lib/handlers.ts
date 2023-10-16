@@ -29,6 +29,9 @@ export interface UpdateCartItemResponse {
 export interface CreateOrderResponse {
   _id: Types.ObjectId[];
 }
+export interface RemoveProductResponse{
+  cartItems: User['cartItems'],
+}
 
 
 export async function getProducts(): Promise<ProductsResponse> {
@@ -299,3 +302,46 @@ export async function createUser(user: {
     }
     return null;
   }
+
+  export async function removeProduct(userId:string, productId:string) 
+:Promise<RemoveProductResponse | null>{
+  await connect();
+  
+  const product = await Products.findById(productId);
+  if(product === null) return null;
+
+  const user = await Users.findById(userId);
+  if(user === null) return null;
+
+  const productFound = user.cartItems.find(
+    (cartItem: any) => cartItem.product._id.equals(productId)
+  );
+  const userProjection = {
+    _id: false,
+    cartItems: true,
+  }
+
+  const productProjection = {
+    _id:true,
+    name:true,
+    price:true,
+  }
+
+  if(productFound){
+    const cart = user.cartItems.filter((item:any) => item != productFound);
+    user.cartItems = cart;
+  }else{
+    const NPIcartItem = await Users.findById(userId, userProjection)
+    .populate("cartItems.product", productProjection);
+    return NPIcartItem;
+  }
+
+  await user.save();
+  
+
+  const updateUser = await Users.findById(userId, userProjection)
+    .populate("cartItems.product", productProjection);
+  
+  return updateUser;
+  
+}

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createUser, CreateUserResponse, getCart, getProductsid, getUser, updateCartItem, UpdateCartItemResponse } from '@/lib/handlers';
+import { createUser, CreateUserResponse, getCart, getProductsid, getUser, removeProduct, RemoveProductResponse, updateCartItem, UpdateCartItemResponse } from '@/lib/handlers';
 import { Types } from 'mongoose';
 import Users, { User } from '@/models/User';
 import Products, { Product } from '@/models/Product';
@@ -54,4 +54,26 @@ export async function PUT(
   return NextResponse.json(cartItems, { status: 200, headers: headers });
   //return NextResponse.json({ status: 201, headers: headers });
   //return NextResponse.json({ _id: userId._id }, { status: 201, headers: headers });
+}
+
+export async function DELETE(
+  request : NextRequest,
+  {
+      params,
+  }:{
+      params:{userId:string, productId:string};
+  }
+):Promise<NextResponse<RemoveProductResponse> | null | {}> {
+
+  if(!Types.ObjectId.isValid(params.userId)||!Types.ObjectId.isValid(params.productId)){
+      return NextResponse.json({},{status:400});
+  }
+  const product = await getProductsid(params.productId);
+  const output = await removeProduct(params.userId,params.productId);
+
+  if(output === null && product===null){
+      return NextResponse.json({},{status:404});
+  }
+
+  return NextResponse.json(output, {status:200});
 }
