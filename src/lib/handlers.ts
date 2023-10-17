@@ -293,14 +293,16 @@ export async function createUser(user: {
       return null;
     }
   
-    const order = user.orders.find(
+    var order = user.orders.find(
       (orderItem:any) => orderItem._id.equals(orderId)
-    ).populate('OrderItems.product',productProjection);
+    );
   
-    if(order){
-      return order;
+    if(!order){
+      return null;
     }
-    return null;
+    order = order.populate('OrderItems.product',productProjection);
+    // SINO la encuentra como va a popularizar el order
+    return order;
   }
 
   export async function removeProduct(userId:string, productId:string) 

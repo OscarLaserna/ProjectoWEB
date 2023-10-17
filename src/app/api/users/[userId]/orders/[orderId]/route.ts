@@ -15,7 +15,7 @@ export async function GET(
         return NextResponse.json({}, { status: 400 });
     }
     const order = await getOrderById(params.userId,params.orderId);
-    if(!order){
+    if(order===null){
         return NextResponse.json({},{status:404});
     }
     return NextResponse.json(order);
