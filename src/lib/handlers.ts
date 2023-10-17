@@ -21,8 +21,9 @@ export interface OrderResponse {
   Order: User[],
 }
 export interface UpdateCartItemResponse {
-  cartItems: Types.ObjectId[],
-  }
+  cartItems: User['cartItems'],
+  created: boolean;
+}
  export interface CreateUserResponse {
   _id: Types.ObjectId | string;
 }
@@ -211,58 +212,55 @@ export async function createUser(user: {
 
 
   export async function updateCartItem(
-    userId: string,
-    productId: string,
-    qty: number,
-  ): Promise<UpdateCartItemResponse| null> {
-    await connect()
-    const product = await Products.findById(productId)
-    //const productCount = await Products.countDocuments({_id : productId})
-    //if (productCount === 0){
-     // return null
-    //}
-    if (product === null){
-      return null
-    }
-    
-    const user = await Users.findById(userId)
-    //const user = await Users.findById(userId).populate('cartItems.product');
-
-    if (user === null){
-      return null
-    }
-    
-    const cartItem = user.cartItems.find((cartItem: any) => cartItem.product._id.equals(productId))
-
-    if (cartItem){
-      cartItem.qty = qty
-    } else {
+    userId:string,
+    productId:string,
+    qty:number,
+  ):Promise<UpdateCartItemResponse | null>{
+    await connect();
+    var created;
+  
+    const product = await Products.findById(productId);
+    if(product === null) return null;
+  
+    const user = await Users.findById(userId);
+    if(user === null) return null;
+  
+    const cartItem = user.cartItems.find(
+      (cartItem: any) => cartItem.product._id.equals(productId)
+    );
+  
+    if(cartItem){
+      cartItem.qty = qty;
+      created = false;
+    }else{
       const newCartItem = {
         product: new Types.ObjectId(productId),
-        qty:qty,
+        qty: qty,
       }
-      user.cartItems.push(newCartItem)
-      await user.save()
+      user.cartItems.push(newCartItem);
+      created = true;
     }
-
-    await user.save()
-
+  
+    await user.save();
+  
     const userProjection = {
       _id: false,
-      cartItems:{
-        product:true,
-        qty:true,
-      }
+      cartItems: true,
     }
+  
     const productProjection = {
-      _id:true,
-      name:true,
-      price:true,
+      name: true,
+      price: true,
     }
-    const updateUser = Users
-      .findById(userId,userProjection).populate('cartItems.product',productProjection);
-      //.findOne({_id:userId},userProjection).populate('cartItems.product',productProjection);
-    return updateUser;
+  
+    const updateUser = await Users.findById(userId, userProjection)
+      .populate("cartItems.product", productProjection);
+  
+    const output = {
+      cartItems: updateUser,
+      created: created,
+    }
+    return output;
   }
 
   export async function getOrderById(userId:string, orderId:string):Promise<OrderResponse | null>{
