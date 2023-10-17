@@ -71,7 +71,7 @@ export async function DELETE(
   const product = await getProductsid(params.productId);
   const output = await removeProduct(params.userId,params.productId);
 
-  if(output === null && product===null){
+  if(output === null || product===null){
       return NextResponse.json({},{status:404});
   }
 
