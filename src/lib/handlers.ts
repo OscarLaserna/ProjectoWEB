@@ -4,6 +4,7 @@ import Users, { User } from '@/models/User';
 import { Types } from 'mongoose';
 import { types } from 'util';
 import Orders, { Order } from '@/models/Order';
+import bcrypt from 'bcrypt';
 
 export interface ProductsResponse {
   products: Product[];
@@ -93,8 +94,10 @@ export async function createUser(user: {
     return null;
   }
 
+  const hash = await bcrypt.hash(user.password, 10);
   const doc: User = {
     ...user,
+    password: hash,
     birthdate: new Date(user.birthdate),
     cartItems: [],
     orders: [],

@@ -1,9 +1,8 @@
 import { NextAuthOptions, User} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { createUser, CreateUserResponse, getProductsid, getUser, updateCartItem, UpdateCartItemResponse } from '@/lib/handlers';
-import { userAgent } from 'next/server';
-import { findSourceMap } from 'module';
-import { connect } from 'http2';
+import bcrypt from 'bcrypt';
+import Users from '@/models/User';
+import connect from 'mongoose';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -25,17 +24,14 @@ export const authOptions: NextAuthOptions = {
         if(!credentials?.email||credentials.password){
             return null;
         }
-        const user == await Users.findOne({email: credentials.email});
+        
+        const user = await Users.findOne({email: credentials.email});
+        const match = await bcrypt.compare(credentials.password, user.password);
 
-        if (user === null){
-            return null;
-        }
+        if(!user) return null;
+        if(!match) return null;
 
-        if (user.password !== credentials.password){
-            return null;
-        }
-
-        return { _id: "user" } as User;
+        return { _id: user._id.toString() } as User;
       },
     }),
   ],

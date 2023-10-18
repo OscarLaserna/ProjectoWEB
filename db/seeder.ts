@@ -3,6 +3,7 @@ import Users, { User } from '@/models/User';
 import Orders, { Order } from '@/models/Order';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 //import Order  from '@/models/Order';
 
 dotenv.config({ path: `.env.local`, override: true });
@@ -117,7 +118,7 @@ async function seed() {
  
   const user: User = {
     email: 'johndoe@example.com',
-    password: '1234',
+    password: await bcrypt.hash("1234", 10),
     name: 'John',
     surname: 'Doe',
     address: '123 Main St, 12345 New York, United States',
