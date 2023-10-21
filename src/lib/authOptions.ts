@@ -2,7 +2,7 @@ import { NextAuthOptions, User} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
 import Users from '@/models/User';
-import connect from 'mongoose';
+import connect from './mongoose';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -21,14 +21,16 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         // Check credentials here...
-        if(!credentials?.email||credentials.password){
+        await connect();
+        if(!credentials?.email || !credentials?.password){
             return null;
         }
         
         const user = await Users.findOne({email: credentials.email});
-        const match = await bcrypt.compare(credentials.password, user.password);
+        
 
         if(!user) return null;
+        const match = await bcrypt.compare(credentials.password, user.password);
         if(!match) return null;
 
         return { _id: user._id.toString() } as User;
