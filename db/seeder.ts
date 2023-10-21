@@ -143,11 +143,38 @@ async function seed() {
     ],
     orders: insertedOrders.map(orders => orders._id),
   };
+
+  const user2: User = {
+    email: 'carlosrubio@example.com',
+    password: await bcrypt.hash("4321", 10),
+    name: 'Carlos',
+    surname: 'Rubio',
+    address: '321 Main St, 54321 New York, United States',
+    birthdate: new Date('1970-01-01'),
+    cartItems: [
+      {
+        product: insertedProducts[4]._id,
+        qty: 8,
+      },
+      {
+        product: insertedProducts[5]._id,
+        qty: 7,
+      },
+    ],
+    orders: [],
+  };
   const res = await Users.create(user);
   const retrievedUser = await Users
   .findOne({ email: 'johndoe@example.com' })
   .populate('cartItems.product');
 console.log(JSON.stringify(retrievedUser, null, 2));
+
+  const res2 = await Users.create(user2);
+  const retrievedUser2 = await Users
+  .findOne({ email: 'carlosrubio@example.com' })
+  .populate('cartItems.product');
+  console.log(JSON.stringify(retrievedUser2, null, 2));
+
 
   await conn.disconnect();
 }
