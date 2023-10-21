@@ -49,6 +49,10 @@ export async function GET(
     return NextResponse.json({}, { status: 400 });
   }
 
+  if (session.user._id !== params.userId) {
+    return NextResponse.json({}, { status: 403 });
+  }
+
   const order = await getOrder(params.userId);
 
   if (order === null) {
