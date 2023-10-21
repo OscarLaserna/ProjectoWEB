@@ -14,10 +14,19 @@ export async function POST(
       params: { userId: string };
     }
 ): Promise<NextResponse<CreateOrderResponse> | {}> {
+  const session: Session | null = await getServerSession(authOptions);
+  if (!session?.user) {
+    return NextResponse.json({}, { status: 401 });
+  }
+
   const body = await request.json();
 
   if (!body.address || !body.cardHolder || !body.cardNumber) {
     return NextResponse.json({}, { status: 400 });
+  }
+
+  if (session.user._id !== params.userId) {
+    return NextResponse.json({}, { status: 403 });
   }
 
   const orderId = await createOrder(params.userId,body);
