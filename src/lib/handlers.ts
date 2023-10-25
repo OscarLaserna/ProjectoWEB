@@ -1,23 +1,30 @@
 import Products, { Product } from '@/models/Product';
 import connect from '@/lib/mongoose';
 import Users, { User } from '@/models/User';
-import { Types } from 'mongoose';
+import { ObjectId, Types } from 'mongoose';
 import { types } from 'util';
 import Orders, { Order } from '@/models/Order';
 import bcrypt from 'bcrypt';
+import { Type } from 'typescript';
 
 export interface ProductsResponse {
   products: Product[];
 }
 export interface ProductsidResponse {
   products: Product[];
+  // hay que hacer esto para que no salte error, quitar y mirar que pasa en src/app/(sections)/products/[productId]/page.tsx
+  // TODO: si se cambia el map() poniendo :any no salta el error, preguntar a gabriel
+  name : string;
+  description : string;
 }
 export interface UserResponse {
   users: User[];
 }
 export interface CartItemResponse {
-  cartItems: User[],
-  }
+  //cambio pq solo como User[] lo detectaba mal
+  // TODO: si se cambia el map() poniendo :any no salta el error, preguntar a gabriel
+  cartItems: User['cartItems'],
+}
 export interface OrderResponse {
   Order: User[],
 }
@@ -69,7 +76,6 @@ export async function getProductsid(productId: string): Promise<ProductsidRespon
   if (product === null) {
     return null;
   }
-
   return product;
 }
 
