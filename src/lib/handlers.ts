@@ -147,8 +147,10 @@ export async function createUser(user: {
     }
     const productProjection = {
       name:true,
-      price:true
+      price:true,
+      img: true
     }
+    //img: true allow us to show the image in the cart for the cart/page.tsx
     const user = await Users.findById(userId,userProjection).populate('cartItems.product',productProjection);
     
     if (user === null){
