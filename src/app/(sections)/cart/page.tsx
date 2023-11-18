@@ -2,7 +2,6 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/authOptions';
 import { notFound, redirect } from 'next/navigation';
 import { Session } from 'next-auth';
-//import { CartItemsResponse, getCartItems } from '@/lib/handlers';
 import { CartItemResponse, getCart } from '@/lib/handlers';
 import Link from 'next/link';
 
@@ -24,6 +23,8 @@ export default async function Cart() {
   }
 
   return (
+    <div className='relative overflow-x-auto'>
+      {/**Relative aqui pq sino se junta con el footer */}
     <div className="bg-gray-100 h-screen py-8">
     <div className="container mx-auto px-4">
         <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
@@ -31,18 +32,19 @@ export default async function Cart() {
           <div className='text-center'>
             <span className='text-center'>The cart is empty</span>
           </div>
+          //puede ser que tenga que hacer la tabla aunque este vacía, mas que nada para que quede bonito + Button Checkout disabled
         ) : (
           <>
           <div className="flex flex-col md:flex-row gap-4">
             <div className="md:w-3/4">
-                <div className="bg-white rounded-lg shadow-md p-6 mb-4">
+                <div className="relative overflow-x-auto shadow-lg bg-white rounded-lg shadow-md p-6 mb-4">
                     <table className="w-full">
                         <thead>
                             <tr>
-                                <th className="text-left font-semibold">Product</th>
-                                <th className="text-left font-semibold">Price</th>
-                                <th className="text-left font-semibold">Quantity</th>
-                                <th className="text-left font-semibold">Total</th>
+                                <th scope="col" className="text-left font-semibold">Product</th>
+                                <th scope="col" className="text-left font-semibold">Price</th>
+                                <th scope="col" className="text-left font-semibold">Quantity</th>
+                                <th scope="col" className="text-left font-semibold">Total</th>
                             </tr>
                         </thead>
                         {/*FROM NOW ON WE MAP THE PRODUCT CAR**/}
@@ -52,12 +54,12 @@ export default async function Cart() {
                           {cartItemsData.cartItems.map((cartItem:any) => (
                             <tr key={cartItem.product._id.toString()}>
                               <td className='py-4'>
-                                <div className='flex items-center'>
-                                  <img className="h-16 w-16 mr-4" src={cartItem.product.img} alt="Product image"/>
+                                {/*<div className='flex items-center'>
+                                  <img className="h-16 w-16 mr-4" src={cartItem.product.img} alt={cartItem.product.name + " image"}/>*/}
                                   <Link href={`/products/${cartItem.product._id}`}>
                                     <span className="font-semibold">{cartItem.product.name}</span>
                                   </Link>
-                                </div>
+                                {/*</div>*/}
                               </td>
                               <td className='py-4'>{cartItem.product.price} €</td>
                               <td className='py-4'>
@@ -71,6 +73,15 @@ export default async function Cart() {
                                 </div>
                               </td>
                               <td className='py-4'>{(cartItem.product.price * cartItem.qty).toFixed(2)} €</td>
+                              {/* Esto lo hace para el total o algo parecido}
+                              <td className='py-4'>
+                                {cartItemsData.cartItems.map((cartItem:any) => (
+                                  Math.round(cartItem.product.price * cartItem.qty* 100)/100 
+                                ).reduce(
+                                  (accumulator:any, cartItem:any) => accumulator + cartItem,0
+                                )
+                                )} 
+                                €</td>
                               {/*toFixed just shows 2 decimals*/}
                             </tr>
                           ))}
@@ -104,6 +115,7 @@ export default async function Cart() {
           </div>
           </>
         )}
+        </div>
         </div>
         </div>
   );
