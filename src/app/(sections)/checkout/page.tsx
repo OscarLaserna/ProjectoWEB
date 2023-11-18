@@ -69,12 +69,9 @@ export default async function Checkout() {
                         {cartItemsData.cartItems.map((cartItem: any) => (
                           <tr key={cartItem.product._id.toString()}>
                             <th scope="row" className='py-4 text-left'>
-                              {/*<div className='flex items-center'>
-                                  <img className="h-16 w-16 mr-4" src={cartItem.product.img} alt={cartItem.product.name + " image"}/>*/}
                               <Link href={`/products/${cartItem.product._id}`}>
                                 <span className="font-semibold">{cartItem.product.name}</span>
                               </Link>
-                              {/*</div>*/}
                             </th>
                             <td scope="row" className='py-4 text-right'>{cartItem.product.price} €</td>
                             <td scope="row" className='py-4 text-center'>{cartItem.qty}</td>
@@ -86,7 +83,15 @@ export default async function Checkout() {
                     <hr className="my-4"></hr>
                     <div className="flex justify-between items-center">
                       <span className="font-bold">Total:</span>
-                      <span className="font-bold">$20.99</span>
+                      <span className="font-semibold">
+                        {
+                          cartItemsData.cartItems
+                            .map((cartItem: any) => Math.round(cartItem.product.price * cartItem.qty * 100) / 100)
+                            .reduce((accumulator: any, total: number) => accumulator + total, 0)
+                            .toFixed(2)
+                        }
+                        €
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -105,7 +110,7 @@ export default async function Checkout() {
                       <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-600">Card Number</label>
                       <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" className="mt-1 p-2 w-full border rounded-md" />
                     </div>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg mt-4 w-full">Purchase</button>
                   </div>
                 </div>
               </div>
