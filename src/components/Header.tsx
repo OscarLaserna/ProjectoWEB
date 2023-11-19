@@ -6,7 +6,7 @@ export default function Header() {
             ShoeShop
           </h1>
           <p className='mt-4 text-sm leading-8 text-gray-400 sm:mt-6 sm:text-base lg:text-lg'>
-            The e-shop created by players for players
+            The shop created for the lovers of shoes
           </p>
         </div>
       </header>

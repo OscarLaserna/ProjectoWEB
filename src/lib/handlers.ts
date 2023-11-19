@@ -16,6 +16,8 @@ export interface ProductsidResponse {
   // TODO: si se cambia el map() poniendo :any no salta el error, preguntar a gabriel
   name : string;
   description : string;
+  img : string;
+  price : number;
 }
 export interface UserResponse {
   users: User[];
