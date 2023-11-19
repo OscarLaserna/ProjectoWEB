@@ -46,15 +46,14 @@ export default async function Order({
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                         <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" />
                     </svg>
-                    <span className="font-semibold ml-2 text-gray-800">Order ID:</span>
+                    <span className="font-bold ml-2 text-gray-800">Order ID:</span>
                     <span className="ml-2 text-black">{order._id}</span>
                 </span>
                 <span className="mt-4 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                    </svg>
-
-                    <span className="font-semibold ml-2 text-gray-800">Shipping Address:</span>
+                    </svg>      
+                    <span className="font-bold ml-2 text-gray-800">Shipping Address:</span>
                     <span className="ml-2 text-black">{order.address}</span>
                 </span>
                 <span className="mt-4 flex items-center">
@@ -62,7 +61,7 @@ export default async function Order({
                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
                     </svg>
 
-                    <span className="font-semibold ml-2 text-gray-800">Payment Information:</span>
+                    <span className="font-bold ml-2 text-gray-800">Payment Information:</span>
                     <span className="ml-2 text-black">{order.cardNumber} ({order.cardHolder})</span>
                 </span>
                 <span className="mt-4 mb-4 flex items-center">
@@ -70,7 +69,7 @@ export default async function Order({
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                     </svg>
 
-                    <span className="font-semibold ml-2 text-gray-800">Order Date:</span>
+                    <span className="font-bold ml-2 text-gray-800">Order Date:</span>
                     <span className="ml-2 text-black">{formattedDateTime}</span>
                 </span>
             </div>
