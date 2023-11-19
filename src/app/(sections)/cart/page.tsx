@@ -58,18 +58,18 @@ export default async function Cart() {
                                 <span className="font-semibold">{cartItem.product.name}</span>
                               </Link>
                             </th>
-                            <td scope='row' className='py-4 text-right'>{cartItem.product.price} €</td>
+                            <td scope='row' className='py-4 text-right'>{cartItem.product.price+'€'}</td>
                             <td scope='row' className='py-4 text-center'>
                               <div className='flex items-center justify-center'>
-                                <button className='border rounded-md py-2 px-4 mr-2 hover:bg-gray-800'>-</button>
+                                <button className='border rounded-md py-2 px-4 mr-2 hover:bg-gray-800 hover:text-white'>-</button>
                                 <span className='text-center w-8'>{cartItem.qty}</span>
-                                <button className='border rounded-md py-2 px-4 ml-2 hover:bg-gray-800'>+</button>
+                                <button className='border rounded-md py-2 px-4 ml-2 hover:bg-gray-800 hover:text-white'>+</button>
                                 <button className="py-2 px-4 ml-2">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="currentColor" d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" /></svg>
                                 </button>
                               </div>
                             </td>
-                            <td scope='row' className='py-4 text-right'>{(cartItem.product.price * cartItem.qty).toFixed(2)} €</td>
+                            <td scope='row' className='py-4 text-right'>{(cartItem.product.price * cartItem.qty).toFixed(2)+'€'}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -104,7 +104,7 @@ export default async function Cart() {
                         €
                       </span>
                     </div>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
                   </div>
                 </div>
               </div>

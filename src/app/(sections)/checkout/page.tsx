@@ -110,7 +110,7 @@ export default async function Checkout() {
                       <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-600">Card Number</label>
                       <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" className="mt-1 p-2 w-full border rounded-md" />
                     </div>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg mt-4 w-full">Purchase</button>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg mt-4 w-full">Purchase</button>
                   </div>
                 </div>
               </div>
