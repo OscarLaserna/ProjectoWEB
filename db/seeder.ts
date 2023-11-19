@@ -80,7 +80,7 @@ async function seed() {
     {
       date: new Date('1990-01-01'),
       address: 'Unnamed Street 4563 , 24352345 London , UK',
-      cardHolder: 'Foo Bar 352345',
+      cardHolder: 'Foo Bar',
       cardNumber: '123456789',
       OrderItems: [
         {
@@ -98,7 +98,7 @@ async function seed() {
     {
       date: new Date('1995-01-01'),
       address: 'Unnamed Street 7843832 , 9843298432 London , UK',
-      cardHolder: 'Foo Bar 43904309342',
+      cardHolder: 'John Doe',
       cardNumber: '843323',
       OrderItems: [
         {

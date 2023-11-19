@@ -20,6 +20,24 @@ export interface ProductsidResponse {
 export interface UserResponse {
   users: User[];
 }
+//Para que no de error puede hacerse asi?
+/*
+  users: User[
+    {
+      _id: Types.ObjectId;
+      email: string;
+      name: string;
+      surname: string;
+      address: string;
+      birthdate: Date;
+      cartItems: {
+        product: Types.ObjectId;
+        qty: number;
+        price: number;
+      }
+    }
+  ];
+*/
 export interface CartItemResponse {
   //cambio pq solo como User[] lo detectaba mal
   // TODO: si se cambia el map() poniendo :any no salta el error, preguntar a gabriel
