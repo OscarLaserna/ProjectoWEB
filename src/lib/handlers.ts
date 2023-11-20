@@ -21,6 +21,12 @@ export interface ProductsidResponse {
 }
 export interface UserResponse {
   users: User[];
+  name : string;
+  surname : string;
+  email: string;
+  address : string;
+  birthday: Date;
+  orders:Types.ObjectId[];
 }
 export interface CartItemResponse {
   //cambio pq solo como User[] lo detectaba mal
@@ -28,7 +34,13 @@ export interface CartItemResponse {
   cartItems: User['cartItems'],
 }
 export interface OrderResponse {
-  Order: User[],
+  Order: User[];
+  cardHolder:string;
+  _id: Types.ObjectId | String;
+  address: String;
+  cardNumber:String;
+  date: Date;
+  OrderItems: Order['OrderItems'],
 }
 export interface UpdateCartItemResponse {
   cartItems: User['cartItems'],
