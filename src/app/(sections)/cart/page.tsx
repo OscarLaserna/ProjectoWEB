@@ -25,16 +25,23 @@ export default async function Cart() {
   return (
     <div className='relative overflow-x-auto'>
       {/**Relative aqui pq sino se junta con el footer */}
-      <div className="bg-gray-100 h-screen py-8">
-        <div className="container mx-auto px-4">
+      {cartItemsData.cartItems.length === 0 ? (
+        <div className='flex flex-col items-center justify-center'>
           <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
-          {cartItemsData.cartItems.length === 0 ? (
-            <div className='text-center'>
-              <span className='text-center'>The cart is empty</span>
-            </div>
-            //puede ser que tenga que hacer la tabla aunque este vacía, mas que nada para que quede bonito + Button Checkout disabled
-          ) : (
-            <>
+          <img
+            src='/img/emptyCart.svg'
+            width={500}
+            height={500}
+            alt="Empty Cart"
+            className="mb-4"  // Añade un margen inferior para separar el encabezado de la imagen
+          />
+        </div>
+        //puede ser que tenga que hacer la tabla aunque este vacía, mas que nada para que quede bonito + Button Checkout disabled
+      ) : (
+        <>
+          <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
+          <div className="bg-gray-100 h-screen py-8">
+            <div className="container mx-auto px-4">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="md:w-3/4">
                   <div className="relative overflow-x-auto shadow-lg bg-white rounded-lg shadow-md p-6 mb-4">
@@ -58,7 +65,7 @@ export default async function Cart() {
                                 <span className="font-semibold">{cartItem.product.name}</span>
                               </Link>
                             </th>
-                            <td scope='row' className='py-4 text-right'>{cartItem.product.price+'€'}</td>
+                            <td scope='row' className='py-4 text-right'>{cartItem.product.price + '€'}</td>
                             <td scope='row' className='py-4 text-center'>
                               <div className='flex items-center justify-center'>
                                 <button className='border rounded-md py-2 px-4 mr-2 hover:bg-gray-800 hover:text-white'>-</button>
@@ -69,7 +76,7 @@ export default async function Cart() {
                                 </button>
                               </div>
                             </td>
-                            <td scope='row' className='py-4 text-right'>{(cartItem.product.price * cartItem.qty).toFixed(2)+'€'}</td>
+                            <td scope='row' className='py-4 text-right'>{(cartItem.product.price * cartItem.qty).toFixed(2) + '€'}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -108,10 +115,10 @@ export default async function Cart() {
                   </div>
                 </div>
               </div>
-            </>
-          )}
-        </div>
-      </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

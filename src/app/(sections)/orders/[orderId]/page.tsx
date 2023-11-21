@@ -37,7 +37,7 @@ export default async function Order({
         hour12: true,
     });
 
-
+    //TODO cambiar OrderItems por orderItems la mayuscula
     return (
         <div>
             <div className='relative overflow-x-auto'>
