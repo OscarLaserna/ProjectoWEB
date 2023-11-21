@@ -8,25 +8,24 @@ import Link from 'next/link';
 
 //session si o si pq aunque el icono solo salga en el navbar si esta logeado se puede acceder poniendo /profile
 
-export default async function Profile(){
+export default async function Profile() {
     const session: Session | null = await getServerSession(authOptions);
 
-    if(!session){
+    if (!session) {
         redirect('/api/auth/signin');
     }
 
     const user = await getUser(session.user._id);
 
     //Aunque deberia encontrarlo siempre pq tiene la sesion iniciada e indica que está en la bbdd
-    if(!user){
+    if (!user) {
         notFound();
     }
 
+    // no puede ser nulo NUNCA se checkea previamente
     const orders = await getOrder(session.user._id);
 
-    console.log(orders);
-
-    const birthdate = new Date(user.birthdate).toLocaleDateString('en-US',{
+    const birthdate = new Date(user.birthdate).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
@@ -42,8 +41,8 @@ export default async function Profile(){
         }
 
     */
-   
-    return(
+
+    return (
         <div>
             <div className='relative overflow-x-auto'>
                 <h1 className="text-2xl font-semibold mb-4">User Profile</h1>
@@ -76,44 +75,54 @@ export default async function Profile(){
                     <span className="ml-2 text-black">{birthdate}</span>
                 </span>
             </div>
-            {(orders)?(
+            {(orders.orders.length != 0) ? (
                 <div className="relative overflow-x-auto shadow-lg bg-white rounded-lg shadow-md p-6 mb-4">
-                <table className="w-full">
-                    <thead>
-                        <tr>
-                            <th scope="col" className="text-left font-semibold">ORDER ID</th>
-                            <th scope="col" className="text-left font-semibold px-4">SHIPMENT ADDRESS</th>
-                            <th scope="col" className="text-left font-semibold px-4">PAYMENT INFORMATION</th>
-                            <th scope="col" className="text-right font-semibold px-4"></th>
-                        </tr>
-                        <tr>
-                            <td colSpan={4}><hr className="my-2" /></td>
-                            {/** el colSpan indica cuantas columnas atraviesa, en este caso la linea separadora "hr" */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {orders.orders.map((orderItem: any) => (
-                            <tr key={orderItem._id.toString()}>
-                                <th scope="row" className='py-4 mr-4 text-left'>
-                                    <span className="font-semibold">{orderItem._id}</span>
-                                </th>
-                                <td scope="row" className='py-4 mr-4 text-left'>{orderItem.address}</td>
-                                <td scope="row" className='py-4 mr-4 text-left'>{orderItem.cardHolder} {orderItem.cardNumber}</td>
-                                <td scope="row" className='py-4 text-right'>
-                                    <Link href={`/orders/${orderItem._id}`}>
-                                        <span className="text-blue-500 hover:text-blue-700 hover:font-bold">
-                                            View Details
-                                        </span>
-                                    </Link>
-                                </td>
+                    <table className="w-full">
+                        <thead>
+                            <tr>
+                                <th scope="col" className="text-left font-semibold">ORDER ID</th>
+                                <th scope="col" className="text-left font-semibold px-4">SHIPMENT ADDRESS</th>
+                                <th scope="col" className="text-left font-semibold px-4">PAYMENT INFORMATION</th>
+                                <th scope="col" className="text-right font-semibold px-4"></th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-                <hr className="my-4"></hr>
+                            <tr>
+                                <td colSpan={4}><hr className="my-2" /></td>
+                                {/** el colSpan indica cuantas columnas atraviesa, en este caso la linea separadora "hr" */}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orders.orders.map((orderItem: any) => (
+                                <tr key={orderItem._id.toString()}>
+                                    <th scope="row" className='py-4 mr-4 text-left'>
+                                        <span className="font-semibold">{orderItem._id}</span>
+                                    </th>
+                                    <td scope="row" className='py-4 mr-4 text-left'>{orderItem.address}</td>
+                                    <td scope="row" className='py-4 mr-4 text-left'>{orderItem.cardHolder} {orderItem.cardNumber}</td>
+                                    <td scope="row" className='py-4 text-right'>
+                                        <Link href={`/orders/${orderItem._id}`}>
+                                            <span className="text-blue-500 hover:text-blue-700 hover:font-bold">
+                                                View Details
+                                            </span>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <hr className="my-4"></hr>
                 </div>
-            ):(
-                <></>
+            ) : (
+                <>
+                    <div className='flex flex-col items-center justify-center'>
+                        <img
+                            src='/img/noOrders.svg'
+                            width={500}
+                            height={500}
+                            alt="Empty Cart"
+                            className="mb-4"  // Añade un margen inferior para separar el encabezado de la imagen
+                        />
+                    </div>
+                </>
             )}
         </div>
     )
