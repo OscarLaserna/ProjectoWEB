@@ -220,8 +220,8 @@ export async function createUser(user: {
     const doc: Order = {
       ...order,
       date: new Date,
-      //OrderItems: [],
-      OrderItems: user.cartItems.map((cartItem: any)=>({
+      //orderItems: [],
+      orderItems: user.cartItems.map((cartItem: any)=>({
         ...cartItem,
         price: cartItem.product.price,
       })),
@@ -231,8 +231,8 @@ export async function createUser(user: {
     user.cartItems = [];
 
      user.orders.push(newOrder._id)
-     //newOrder.OrderItems.push(user.cartItem)
-     //newOrder.OrderItems.price.push(user.cartItem)
+     //newOrder.orderItems.push(user.cartItem)
+     //newOrder.orderItems.price.push(user.cartItem)
      await user.save()
     return {
       _id: newOrder._id,
@@ -300,7 +300,7 @@ export async function createUser(user: {
       address: true,
       cardHolder: true,
       cardNumber: true,
-      OrderItems:{
+      orderItems:{
         product: true,
         qty: true,
         price:true,
@@ -327,7 +327,7 @@ export async function createUser(user: {
     if(!order){
       return null;
     }
-    order = order.populate('OrderItems.product',productProjection);
+    order = order.populate('orderItems.product',productProjection);
     // SINO la encuentra como va a popularizar el order
     return order;
   }

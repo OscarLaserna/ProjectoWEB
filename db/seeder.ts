@@ -82,7 +82,7 @@ async function seed() {
       address: 'Unnamed Street 4563 , 24352345 London , UK',
       cardHolder: 'Foo Bar',
       cardNumber: '123456789',
-      OrderItems: [
+      orderItems: [
         {
         product: insertedProducts[0]._id,
         qty: 2,
@@ -100,7 +100,7 @@ async function seed() {
       address: 'Unnamed Street 7843832 , 9843298432 London , UK',
       cardHolder: 'John Doe',
       cardNumber: '843323',
-      OrderItems: [
+      orderItems: [
         {
         product: insertedProducts[2]._id,
         qty: 1,

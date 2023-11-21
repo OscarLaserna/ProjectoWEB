@@ -37,7 +37,7 @@ export default async function Order({
         hour12: true,
     });
 
-    //TODO cambiar OrderItems por orderItems la mayuscula
+    //TODO cambiar orderItems por orderItems la mayuscula
     return (
         <div>
             <div className='relative overflow-x-auto'>
@@ -88,7 +88,7 @@ export default async function Order({
                         </tr>
                     </thead>
                     <tbody>
-                        {order.OrderItems.map((orderItem: any) => (
+                        {order.orderItems.map((orderItem: any) => (
                             <tr key={orderItem.product._id.toString()}>
                                 <th scope="row" className='py-4 text-left'>
                                     <Link href={`/products/${orderItem.product._id}`}>
@@ -107,7 +107,7 @@ export default async function Order({
                     <span className="font-bold">Total:</span>
                     <span className="font-semibold">
                         {
-                            order.OrderItems
+                            order.orderItems
                                 .map((orderItem: any) => Math.round(orderItem.price * orderItem.qty * 100) / 100)
                                 .reduce((accumulator: any, total: number) => accumulator + total, 0)
                                 .toFixed(2)

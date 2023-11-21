@@ -6,7 +6,7 @@ export interface Order {
   address: string;
   cardHolder: string;
   cardNumber: string;
-  OrderItems: {
+  orderItems: {
     product: Types.ObjectId;
     qty: number;
     price: number;
@@ -31,7 +31,7 @@ const OrderSchema = new Schema({
     type: String,
     required: true,
   },
-  OrderItems: [
+  orderItems: [
     {
       _id: false,
       product: {
