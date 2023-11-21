@@ -96,10 +96,11 @@ export default async function Product({
               </div>
             ) : (
               <>
+              
               {/**PODRIA MOSTRAR EL BOTON PERO AL HACER CLICK QUE REDIRECCIONE A SING UP */}
-              {/*<button onClick={redirect('/api/auth/signin')} className="ml-6 px-6 py-2 text-white font-semibold uppercase transition duration-200 ease-in border-2 border-gray-900 bg-blue-500 rounded-full hover:bg-blue-800 hover:text-white focus:outline-none">
+              <button disabled={true}/*onClick={redirect('/api/auth/signin')}*/ className="ml-6 px-6 py-2 text-white font-semibold uppercase transition duration-200 ease-in border-2 border-gray-900 bg-blue-300 rounded-full hover:bg-blue-300 hover:text-white focus:outline-none">
                     Add to cart
-            </button>*/}
+            </button>
               </>
             )}
           </div>
