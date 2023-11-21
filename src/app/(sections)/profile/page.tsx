@@ -93,11 +93,11 @@ export default async function Profile() {
                         <tbody>
                             {orders.orders.map((orderItem: any) => (
                                 <tr key={orderItem._id.toString()}>
-                                    <th scope="row" className='py-4 mr-4 text-left'>
+                                    <th scope="row" className='py-4 text-left'>
                                         <span className="font-semibold">{orderItem._id}</span>
                                     </th>
-                                    <td scope="row" className='py-4 mr-4 text-left'>{orderItem.address}</td>
-                                    <td scope="row" className='py-4 mr-4 text-left'>{orderItem.cardHolder} {orderItem.cardNumber}</td>
+                                    <td scope="row" className='py-4 text-left'>{orderItem.address}</td>
+                                    <td scope="row" className='py-4 text-left'>{orderItem.cardHolder} {orderItem.cardNumber}</td>
                                     <td scope="row" className='py-4 text-right'>
                                         <Link href={`/orders/${orderItem._id}`}>
                                             <span className="text-blue-500 hover:text-blue-700 hover:font-bold">

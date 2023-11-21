@@ -39,16 +39,22 @@ export default async function Checkout() {
   return (
     <div className='relative overflow-x-auto'>
       {/**Relative aqui pq sino se junta con el footer */}
-      <div className="bg-gray-100 h-screen py-8">
-        <div className="container mx-auto px-4">
-          <h1 className="text-2xl font-semibold mb-4">Checkout</h1>
           {cartItemsData.cartItems.length === 0 ? (
-            <div className='text-center'>
-              <span className='text-center'>The cart is empty</span>
+            <div className='flex flex-col items-center justify-center'>
+              <img
+                src='/img/emptyCart.svg'
+                width={500}
+                height={500}
+                alt="Empty Cart"
+                className="mb-4"  // Añade un margen inferior para separar el encabezado de la imagen
+              />
             </div>
             //puede ser que tenga que hacer la tabla aunque este vacía, mas que nada para que quede bonito + Button Checkout disabled
           ) : (
             <>
+      <div>
+        <div className="container mx-auto px-4">
+              <h1 className="text-2xl font-semibold mb-4">Checkout</h1>
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="md:w-3/4">
                   <div className="relative overflow-x-auto shadow-lg bg-white rounded-lg shadow-md p-6 mb-4">
@@ -114,10 +120,10 @@ export default async function Checkout() {
                   </div>
                 </div>
               </div>
-              </>
-              )}
             </div>
-        </div>
-      </div>
-      );
+          </div>
+            </>
+          )}
+    </div>
+  );
 }
