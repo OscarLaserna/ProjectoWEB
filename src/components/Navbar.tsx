@@ -8,6 +8,7 @@ import {
   import { getServerSession } from 'next-auth/next';
   import Link from 'next/link';
   import { Session } from 'next-auth';
+import NavbarCartButton from './NavbarCartButton';
   
   export default async function Navbar() {
     const session: Session | null = await getServerSession(authOptions);
@@ -35,10 +36,10 @@ import {
               {session ? (
                 //*si se ha logeado muestra esto -> Carrito, Profile, Logout
                 <>
-                  <NavbarButton href='/cart'>
+                  <NavbarCartButton href='/cart'>
                     <span className='sr-only'>Cart</span>
                     <ShoppingCartIcon className='h-6 w-6' aria-hidden='true' />
-                  </NavbarButton>
+                  </NavbarCartButton>
                   <NavbarButton href='/profile'>
                     <span className='sr-only'>User profile</span>
                     <UserIcon className='h-6 w-6' aria-hidden='true' />
