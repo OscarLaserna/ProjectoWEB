@@ -41,11 +41,38 @@ export default function CartItemCounter({
             setIsUpdating(false);
         }
     };
+
+    const onMinusBtnClick = async function (event: React.MouseEvent) {
+        setIsUpdating(true);
+
+        try {
+            const res = await fetch(
+                `/api/users/${session!.user._id}/cart/${productId}`,
+                {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        qty: qty - 1,
+                    }),
+                }
+            );
+
+            if (res.ok) {
+                const body = await res.json();
+                updateCartItems(body.cartItems);
+            }
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+         
                 /**AL hacer f5 como tarda muestra la imagen */
 
     return (
         <div className='flex items-center justify-center'>
-            <button className='border rounded-md py-2 px-4 mr-2 hover:bg-gray-800 hover:text-white'>-</button>
+            <button
+            onClick={onMinusBtnClick}
+            disabled={!session || isUpdating}
+            className='border rounded-md py-2 px-4 mr-2 hover:bg-gray-800 hover:text-white'>-</button>
             <span className='text-center w-8'>{qty}</span>
             <button 
                 onClick={onPlusBtnClick}
