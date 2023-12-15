@@ -67,7 +67,7 @@ export default function CartItemCounter({
 
     const onDeleteBtnClick = async function (event: React.MouseEvent) {
         setIsUpdating(true);
-
+        //TODO : pagina productId cuando borramos deja volver a añadir cambiar para que cambie directamente a "ADD TO CART" sin tener que refrescar
         try {
             const res = await fetch(
                 `/api/users/${session!.user._id}/cart/${productId}`,

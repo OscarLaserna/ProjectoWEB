@@ -1,0 +1,1 @@
+//TODO: se puede hacer una clase general y que se le pasen como parametros la dirección o un boton para redirigir en cada caso

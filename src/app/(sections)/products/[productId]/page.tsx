@@ -6,6 +6,7 @@ import { authOptions } from '@/lib/authOptions';
 import { Session } from 'next-auth';
 import { get } from 'http';
 import CartItemCounter from '@/components/CartItemCounter';
+import AddToCartButton from '@/components/AddToCartButton';
 
 export default async function Product({
   params,
@@ -80,9 +81,8 @@ export default async function Product({
             {(cart) ? (
               <div className="flex flex-col items-center justify-between text-gray-900 md:flex-row">
                 {(cart.cartItems.length === 0 || cart.cartItems.filter((cartItem: any) => cartItem.product._id.toString() === params.productId).length === 0) ? (
-                  <button className="ml-6 px-6 py-2 text-white font-semibold uppercase transition duration-200 ease-in border-2 border-gray-900 bg-blue-500 rounded-full hover:bg-blue-800 hover:text-white focus:outline-none">
-                    Add to cart
-                  </button>
+                  <AddToCartButton productId={params.productId}/>
+                  //como que hay que refrescar para que cambie y detecte los cambios en la condición de arriba
                 ) : (
                   <CartItemCounter productId={params.productId}/>
                 )}

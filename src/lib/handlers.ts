@@ -16,9 +16,17 @@ export interface ProductsidResponse {
   // TODO: si se cambia el map() poniendo :any no salta el error, preguntar a gabriel
   name : string;
   description : string;
+  img: any;
+  price: number;
 }
 export interface UserResponse {
   users: User[];
+  birthdate: Date;
+  name: string;
+  email: string;
+  surname: string;
+  address: string;
+  orders: Order[];
 }
 //Para que no de error puede hacerse asi?
 /*
@@ -45,6 +53,14 @@ export interface CartItemResponse {
 }
 export interface OrderResponse {
   Order: User[],
+  _id: any,
+  date: Date,
+  address: string,
+  cardHolder: string,
+  cardNumber: string,
+  orderItems: [
+
+  ],
 }
 export interface UpdateCartItemResponse {
   cartItems: User['cartItems'],
