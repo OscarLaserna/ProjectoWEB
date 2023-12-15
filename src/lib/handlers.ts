@@ -128,8 +128,7 @@ export async function createUser(user: {
 }): Promise<CreateUserResponse | null> {
   await connect();
 
-  const prevUser = await Users.find({ email: user.email });
-
+  const prevUser = await Users.find({ email: user.email });  
   if (prevUser.length !== 0) {
     return null;
   }

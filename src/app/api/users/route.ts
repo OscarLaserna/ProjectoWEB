@@ -5,7 +5,6 @@ export async function POST(
   request: NextRequest
 ): Promise<NextResponse<CreateUserResponse> | {}> {
   const body = await request.json();
-
   if (!body.email || !body.password || !body.name || !body.surname || !body.address || !body.birthdate) {
     return NextResponse.json({}, { status: 400 });
   }
