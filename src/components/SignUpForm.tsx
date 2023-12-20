@@ -44,7 +44,7 @@ export default function SignUpForm() {
         {
           method: 'POST',
           body: JSON.stringify(
-            formValues,
+            formValues
           ),
         }
       );

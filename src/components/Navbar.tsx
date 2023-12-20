@@ -8,8 +8,9 @@ import {
   import { getServerSession } from 'next-auth/next';
   import Link from 'next/link';
   import { Session } from 'next-auth';
-import NavbarCartButton from './NavbarCartButton';
-  
+  import NavbarCartButton from './NavbarCartButton';
+  import NavbarSignOutButton from './NavbarSignOutButton';
+
   export default async function Navbar() {
     const session: Session | null = await getServerSession(authOptions);
   
@@ -36,7 +37,7 @@ import NavbarCartButton from './NavbarCartButton';
               {session ? (
                 //*si se ha logeado muestra esto -> Carrito, Profile, Logout
                 <>
-                  <NavbarCartButton href='/cart'>
+                  <NavbarCartButton>
                     <span className='sr-only'>Cart</span>
                     <ShoppingCartIcon className='h-6 w-6' aria-hidden='true' />
                   </NavbarCartButton>
@@ -44,13 +45,13 @@ import NavbarCartButton from './NavbarCartButton';
                     <span className='sr-only'>User profile</span>
                     <UserIcon className='h-6 w-6' aria-hidden='true' />
                   </NavbarButton>
-                  <NavbarButton href='/api/auth/signout'>
+                  <NavbarSignOutButton>
                     <span className='sr-only'>Sign out</span>
                     <ArrowRightOnRectangleIcon
                       className='h-6 w-6'
                       aria-hidden='true'
                     />
-                  </NavbarButton>
+                  </NavbarSignOutButton>
                 </>
               ) : (
                 // *Si no se ha logeado muestra el signup, login
