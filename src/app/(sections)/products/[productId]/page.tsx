@@ -7,6 +7,8 @@ import { Session } from 'next-auth';
 import { get } from 'http';
 import CartItemCounter from '@/components/CartItemCounter';
 import AddToCartButton from '@/components/AddToCartButton';
+import WrapperCartItemCounter from '@/components/WrapperCartItemCounter';
+import Button from '@/components/Button';
 
 export default async function Product({
   params,
@@ -82,18 +84,15 @@ export default async function Product({
               <div className="flex flex-col items-center justify-between text-gray-900 md:flex-row">
                 {(cart.cartItems.length === 0 || cart.cartItems.filter((cartItem: any) => cartItem.product._id.toString() === params.productId).length === 0) ? (
                   <AddToCartButton productId={params.productId}/>
-                  //como que hay que refrescar para que cambie y detecte los cambios en la condición de arriba
                 ) : (
-                  <CartItemCounter productId={params.productId}/>
+                    <CartItemCounter productId={params.productId}/>
                 )}
               </div>
             ) : (
               <>
-              
-              {/**PODRIA MOSTRAR EL BOTON PERO AL HACER CLICK QUE REDIRECCIONE A SING UP */}
-              <button disabled={true}/*onClick={redirect('/api/auth/signin')}*/ className="px-6 py-2 items-center justify-center text-white font-semibold uppercase transition duration-200 ease-in border-2 border-gray-900 bg-blue-300 rounded-full hover:bg-blue-300 hover:text-white focus:outline-none">
-                    ADD TO CART
-              </button>
+              <Button href='/auth/signin'>
+                ADD TO CART
+              </Button>
               </>
             )}
           </div>

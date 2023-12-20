@@ -1,6 +1,7 @@
 'use client';
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useSession } from 'next-auth/react';
 import { CartItemsContext } from "@/providers/CartItemsProvider";
 import Link from "next/link";
 import CartItemCounter from "./CartItemCounter";
@@ -9,6 +10,28 @@ import Button from "@/components/Button";
 
 export default function CartItemsList(){
     const {cartItems,updateCartItems} = useContext(CartItemsContext);
+    const {data:session} = useSession({required: true});
+
+    useEffect(()=>{
+      const update = async () =>{
+        try{
+          const res = await fetch(`/api/users/${session!.user._id}/cart`,{
+            method: 'GET',
+          });
+
+          if(res.ok){
+            const body = await res.json();
+            updateCartItems(body.cartItems);
+          }
+        }catch(err){
+          console.log(err);
+        }
+      };
+        update();
+
+      }, [session,updateCartItems]);
+
+
     return(
     <>
       {cartItems.length === 0 ? (
@@ -67,11 +90,19 @@ export default function CartItemsList(){
                     <h2 className="text-lg font-semibold mb-4">Summary</h2>
                     <div className="flex justify-between mb-2">
                       <span>Subtotal</span>
-                      <span>$19.99</span>
+                      <span>
+                      {
+                          cartItems
+                            .map((cartItem: any) => Math.round(cartItem.product.price * cartItem.qty * 100) / 100)
+                            .reduce((accumulator: any, total: number) => accumulator + total, 0)
+                            .toFixed(2)
+                        }
+                        €
+                      </span>
                     </div>
                     <div className="flex justify-between mb-2">
                       <span>Taxes</span>
-                      <span>$1.99</span>
+                      <span>$0.00</span>
                     </div>
                     <div className="flex justify-between mb-2">
                       <span>Shipping</span>

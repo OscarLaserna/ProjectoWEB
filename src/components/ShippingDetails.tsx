@@ -11,7 +11,7 @@ interface FormValues {
     cardHolder: string;
     cardNumber: string;
 }
-export default function ShippingDetails( ) {
+export default function ShippingDetails() {
     const {data:session} = useSession({required: true});
     const router = useRouter();
     const [error, setError] = useState<string>('');

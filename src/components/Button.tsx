@@ -1,4 +1,4 @@
-//TODO: se puede hacer una clase general y que se le pasen como parametros la dirección o un boton para redirigir en cada caso
+'use client'
 import { useRouter } from 'next/navigation';
 
 interface ButtonProps{
@@ -6,7 +6,7 @@ interface ButtonProps{
     children: React.ReactNode;
 }
 
-export default function CheckoutButton({href, children}: ButtonProps) {
+export default function Button({href, children}: ButtonProps) {
     const router = useRouter();
 
     const handleClick = () => {
