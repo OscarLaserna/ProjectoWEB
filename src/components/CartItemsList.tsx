@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { CartItemsContext } from "@/providers/CartItemsProvider";
 import Link from "next/link";
 import CartItemCounter from "./CartItemCounter";
+import Button from "@/components/Button";
 
 
 export default function CartItemsList(){
@@ -89,7 +90,9 @@ export default function CartItemsList(){
                         €
                       </span>
                     </div>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                    <Button href='/checkout'>
+                      Checkout
+                    </Button>
                   </div>
                 </div>
               </div>

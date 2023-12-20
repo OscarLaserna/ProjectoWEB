@@ -2,8 +2,11 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/authOptions';
 import { notFound, redirect } from 'next/navigation';
 import { Session } from 'next-auth';
-import { CartItemResponse, getCart } from '@/lib/handlers';
+import { CartItemResponse, getCart} from '@/lib/handlers';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import ShippingDetails from '@/components/ShippingDetails';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,6 +35,8 @@ export default async function Checkout() {
     notFound();
   }
 
+ 
+
 
   //! HACER ESTO CON LA TABLA QUE NOS DA COMO EJEMPLO EN FLOWBITE
 
@@ -39,21 +44,21 @@ export default async function Checkout() {
   return (
     <div className='relative overflow-x-auto'>
       {/**Relative aqui pq sino se junta con el footer */}
-          {cartItemsData.cartItems.length === 0 ? (
-            <div className='flex flex-col items-center justify-center'>
-              <img
-                src='/img/emptyCart.svg'
-                width={500}
-                height={500}
-                alt="Empty Cart"
-                className="mb-4"  // Añade un margen inferior para separar el encabezado de la imagen
-              />
-            </div>
-            //puede ser que tenga que hacer la tabla aunque este vacía, mas que nada para que quede bonito + Button Checkout disabled
-          ) : (
-            <>
-      <div>
-        <div className="container mx-auto px-4">
+      {cartItemsData.cartItems.length === 0 ? (
+        <div className='flex flex-col items-center justify-center'>
+          <img
+            src='/img/emptyCart.svg'
+            width={500}
+            height={500}
+            alt="Empty Cart"
+            className="mb-4"  // Añade un margen inferior para separar el encabezado de la imagen
+          />
+        </div>
+        //puede ser que tenga que hacer la tabla aunque este vacía, mas que nada para que quede bonito + Button Checkout disabled
+      ) : (
+        <>
+          <div>
+            <div className="container mx-auto px-4">
               <h1 className="text-2xl font-semibold mb-4">Checkout</h1>
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="md:w-3/4">
@@ -102,28 +107,15 @@ export default async function Checkout() {
                   </div>
                 </div>
                 <div className="md:w-1/3">
-                  <div className="bg-white rounded-lg shadow-md p-6">
-                    <h2 className="text-lg font-semibold mb-4">SHIPPING DETAILS</h2>
-                    <div className="mb-4">
-                      <label htmlFor="shippingAddress" className="block text-sm font-medium text-gray-600">Shipping Address</label>
-                      <input type="text" id="address" name="shippingAddress" placeholder="123 Main St" className="mt-1 p-2 w-full border rounded-md" />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="cardHolder" className="block text-sm font-medium text-gray-600">Card Holder</label>
-                      <input type="text" id="cardHolder" name="cardHolder" placeholder="John Doe" className="mt-1 p-2 w-full border rounded-md" />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-600">Card Number</label>
-                      <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" className="mt-1 p-2 w-full border rounded-md" />
-                    </div>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg mt-4 w-full">Purchase</button>
-                  </div>
+                  <ShippingDetails>
+                    
+                  </ShippingDetails>
                 </div>
               </div>
             </div>
           </div>
-            </>
-          )}
+        </>
+      )}
     </div>
   );
 }

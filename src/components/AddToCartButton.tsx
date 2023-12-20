@@ -2,6 +2,8 @@
 import { useSession } from 'next-auth/react';
 import { CartItemsContext } from "@/providers/CartItemsProvider";
 import { useContext, useState } from "react";
+import { useRouter } from 'next/navigation';
+
 
 interface CartItemCounterProps {
     productId: string;
@@ -11,6 +13,7 @@ export default function AddToCartButton({ productId }: CartItemCounterProps) {
     const { data: session } = useSession({ required: true });
     const { cartItems, updateCartItems } = useContext(CartItemsContext);
     const [isUpdating, setIsUpdating] = useState(false);
+    const router = useRouter();
 
     const cartItem = cartItems.find((cartItem) =>
     cartItem.product._id === productId
@@ -32,6 +35,7 @@ export default function AddToCartButton({ productId }: CartItemCounterProps) {
             if (res.ok) {
                 const body = await res.json();
                 updateCartItems(body.cartItems);
+                router.refresh();
             }
         } finally {
             setIsUpdating(false);

@@ -10,11 +10,13 @@ interface NavbarButtonProps {
   children: ReactNode;
 }
 
-const handleSignOut = async () => {
-    await signOut();
-};
+
 
 export default function NavbarButton({ children }: NavbarButtonProps) {
+    const handleSignOut = async () => {
+        await signOut();
+    };
+
   return (
     <button className={navbarButtonClasses} onClick={handleSignOut}>
       {children}
