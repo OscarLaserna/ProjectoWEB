@@ -83,9 +83,13 @@ export default async function Product({
             {(cart) ? (
               <div className="flex flex-col items-center justify-between text-gray-900 md:flex-row">
                 {(cart.cartItems.length === 0 || cart.cartItems.filter((cartItem: any) => cartItem.product._id.toString() === params.productId).length === 0) ? (
+                  <WrapperCartItemCounter>
                   <AddToCartButton productId={params.productId}/>
+                  </WrapperCartItemCounter>
                 ) : (
+                  <WrapperCartItemCounter>
                     <CartItemCounter productId={params.productId}/>
+                    </WrapperCartItemCounter>
                 )}
               </div>
             ) : (

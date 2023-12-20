@@ -7,10 +7,9 @@ import { CartItemsContext } from '@/providers/CartItemsProvider';
 
 interface WrapperCartItemCounterProps {
     children: ReactNode;
-    productId?: string;
 }
 
-export default function WrapperCartItemCounter({productId,children}:WrapperCartItemCounterProps){
+export default function WrapperCartItemCounter({children}:WrapperCartItemCounterProps){
     const {data:session} = useSession({required: true});
     const {cartItems,updateCartItems} = useContext(CartItemsContext);
 

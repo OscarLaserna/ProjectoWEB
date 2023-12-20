@@ -75,7 +75,7 @@ export default async function Profile() {
                     <span className="ml-2 text-black">{birthdate}</span>
                 </span>
             </div>
-            {(orders.orders.length != 0) ? (
+            {(orders!.orderItems.length != 0) ? (
                 <div className="relative overflow-x-auto shadow-lg bg-white rounded-lg shadow-md p-6 mb-4">
                     <table className="w-full">
                         <thead>
@@ -91,7 +91,7 @@ export default async function Profile() {
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.orders.map((orderItem: any) => (
+                            {orders!.orderItems.map((orderItem: any) => (
                                 <tr key={orderItem._id.toString()}>
                                     <th scope="row" className='py-4 text-left'>
                                         <span className="font-semibold">{orderItem._id}</span>

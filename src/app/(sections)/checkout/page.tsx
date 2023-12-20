@@ -107,9 +107,7 @@ export default async function Checkout() {
                   </div>
                 </div>
                 <div className="md:w-1/3">
-                  <ShippingDetails>
-                    
-                  </ShippingDetails>
+                  <ShippingDetails/>
                 </div>
               </div>
             </div>

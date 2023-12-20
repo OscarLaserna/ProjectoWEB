@@ -62,7 +62,7 @@ export default function ShippingDetails() {
             <h2 className="text-lg font-semibold mb-4">SHIPPING DETAILS</h2>
             <div className="mb-4">
                 <label htmlFor="shippingAddress" className="block text-sm font-medium text-gray-600">Shipping Address</label>
-                <input type="address" id="address" name="address" placeholder="123 Main St" className="mt-1 p-2 w-full border rounded-md"
+                <input type="text" id="address" name="address" placeholder="123 Main St" className="mt-1 p-2 w-full border rounded-md"
                     value={formValues.address}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setFormValues((prevFormValues) => ({
